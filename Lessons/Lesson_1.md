@@ -57,8 +57,7 @@
 
 -- *Slide* --
 ### Part 1: Generic HPC Cluster Design
-<img src="https://raw.githubusercontent.com/UoM-ResPlat-DevOps/SpartanIntro/master/Images/genericcluster.png" />
-Image originally from the VPAC
+<img src="https://raw.githubusercontent.com/UoM-ResPlat-DevOps/SpartanIntro/master/Images/genericcluster.png" />Image originally from the VPAC
 -- *Slide End* --
 
 -- *Slide* --
@@ -91,7 +90,6 @@ Image originally from the VPAC
 ### Part I: Accounts and Projects
 * Spartan uses its an authentication that is tied to the university Security Assertion Markup Language (SAML). The login URL is `https://dashboard.hpc.unimelb.edu.au/karaage`
 * Users on Spartan must belong to a project. Projects must be led by a University of Melbourne researcher (the "Principal Investigator") and are subject to approval by the Head of Research Compute Services. Participants in a project can be researchers or research support staff from anywhere.
-* Select Department from this list: `https://gitlab.unimelb.edu.au/resplat-cloud/uom-cloud-dashboard/blob/uom/queens/nectar_dashboard/rcallocation/choices_dept.py`
 * Projects have their own project directory for files (500GB default).
 -- *Slide End* --
 
@@ -411,6 +409,7 @@ my­app data
 -- *Slide End* --
 
 -- *Slide* --
+### Part 3: Single Core Job
 * Examples at `/usr/local/common/MATLAB`, `/usr/local/common/R`, `/usr/local/OpenFOAM`; note that the job can call other scripts. Note that Slurm has full and abbreviated directives.
 -- *Slide End* --
 
@@ -452,11 +451,10 @@ invoked and the resource requests altered e.g.,
 -- *Slide* --
 ### Part 3 : OpenFOAM Decompose Methods
 * Method is how task is split up (`simple` or `scotch` is easiest!)
-* Simple: Geometric decomposition, domain split into pieces by direction (e.g., 2 in x, 1 in y etc)
+* Simple: Geometric decomposition, domain split into pieces by direction (e.g., 2 in x, 1 in y etc). 
 * Hierarchical: As simple except order is specified (first Y then X). See `multiphase/reactingTwoPhaseEulerFoam/laminar/bubbleColumnEvaporating/system/decomposeParDict`
 * Scotch: Requires no geometric input from the user and attempts to minimise the number of processor boundaries. User can specificy weights with `processorWeights`. See `multiphase/interFoam/RAS/DTCHull/system/decomposeParDict`
 * Manual: User specifies call to particular processor. 
-* Methods have their own compulsory entries; `scotch` doesn't require any!
 -- *Slide End* --
 
 -- *Slide* --
@@ -559,8 +557,8 @@ srun -N 1 -n 1 -t 06:00:00 ./myserialapp
 |-----------------------|---------------------------:|
 |Event Address          |`--mail-user=[address]`     |
 |Event Notification     |`--mail-type=[events]`      |
-|Memory Size            |`--mem=[mem][M|G|T]`        |
-|Proc Memory Size       |`--mem-per-cpu=[mem][M|G|T]`|
+|Memory Size            |`--mem=[mem][M G T]`        |
+|Proc Memory Size       |`--mem-per-cpu=[mem][M G T]`|
 -- *Slide End* --
 
 -- *Slide* --
@@ -752,34 +750,33 @@ srun -N 1 -n 1 -t 06:00:00 ./myserialapp
 
 | Metacharacter | Explanation         | Example                                          |
 |:--------------|:-------------------|:-----------------------------------------------|
-| ^             | Beginning of line anchor   | `grep '^row' /usr/share/dict/words`       |
-| $             | End of line anchor         | `grep 'row$' /usr/share/dict/words`       |
+| ^             | Beginning of line anchor   | `grep '^row' $file`       |
+| $             | End of line anchor         | `grep 'row$' $file`       |
 -- *Slide End* --
 
 -- *Slide* --
 ### Part 2: Regular Expressions and Metacharacters cont..
 | Metacharacter | Explanation        | Example   |
 |---------------|--------------------|-----------|
-| .             | Any single character       | `grep '^...row...$' /usr/share/dict/words` |
-| *             | Match zero plus preceding characters | `grep '^...row.*' /usr/share/dict/words`   |
-| [ ]           | Matches one in the set                 | `grep '^[Pp].row..$' /usr/share/dict/words`    |
+| .             | Any single character       | `grep '^...row...$' $file` |
+| *             | Match zero plus preceding characters | `grep '^...row.*' $file`   |
+| [ ]           | Matches one in the set                 | `grep '^[Pp].row..$' $file`    |
 -- *Slide End* --
 
 -- *Slide* --
 ### Part 2: Regular Expressions and Metacharacters cont..
 | Metacharacter | Explanation        | Example   |
 |---------------|--------------------|-----------|
-| [x-y]		| Matches on in the range                | `grep '^[s-u].row..$' /usr/share/dict/words`   |
-| [^ ]          | Matches one character not in the set   |  `grep '^[^a].row..$' /usr/share/dict/words`   |
-| `|`     | Logical OR   |  `grep '^[^a|P].row..$' /usr/share/dict/words`   |
+| [x-y]		| Matches on in the range                | `grep '^[s-u].row..$' $file`   |
+| [^ ]          | Matches one character not in the set   |  `grep '^[^a].row..$' $file`   |
 -- *Slide End* --
 
 -- *Slide* --
 ### Part 2: Regular Expressions and Metacharacters cont..
 | Metacharacter | Explanation        | Example   |
 |---------------|--------------------|-----------|
-| [^x-y]        | Matches any character not in the range | `grep '^[^a-z].row..$' /usr/share/dict/words` |
-| \             | Escape a metacharacter |  `grep '^A\.$' /usr/share/dict/words`
+| [^x-y]        | Matches any character not in the range | `grep '^[^a-z].row..$' $file` |
+| \             | Escape a metacharacter |  `grep '^A\.$' $file`
 -- *Slide End* --
 
 -- *Slide* --
@@ -904,7 +901,6 @@ http://sed.sourceforge.net/sed1line.txt
 | ..          | One level up in the file system hierarchy.                                      | 
 | TAB         | Autocompletion suggestions.                                                     | 
 | !!          | Repeat last typed command; can be combined with other commands.                 | 
-| !ec	      | Repeat last typed command that started with 'ec'                                |
 | &&          | Combine commands if the first succeeds (e.g., make && make install)                     | 
 | &#124;&#124; | Alternative command if the first fails (e.g., make makefile1 &#124;&#124; make Makefile)  | 
 -- *Slide End* --
@@ -1068,4 +1064,7 @@ http://sed.sourceforge.net/sed1line.txt
 * Heredocs can also be used however to create Slurm scripts. A loop can be used to create multiple jobs for submission. See `/usr/local/common/HPCshells/heres/herescript.sh`. See also `/usr/local/common/Gaussian`
 -- *Slide End* --
 
+-- *Slide* --
+<img src="https://raw.githubusercontent.com/UoM-ResPlat-DevOps/SpartanIntro/master/Images/hypnotoad.png" width="150%" height="150%" />
+-- *Slide End* --
 
