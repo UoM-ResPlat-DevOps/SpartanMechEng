@@ -1,5 +1,5 @@
 -- *Slide* --
-### Goals For This Morning
+### Goals For Today
 * Part 1: Learning about supercomputers and Spartan.
 * Part 2: Logging on an exploring the Linux Environment.
 * Part 3: Learning about Environment Modules and the Slurm job submission system.
