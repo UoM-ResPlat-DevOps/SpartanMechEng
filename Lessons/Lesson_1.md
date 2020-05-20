@@ -8,9 +8,9 @@
 -- *Slide End* --
 
 -- *Slide* --
-### Slide Respository
+### Slide Repository
 * A copy of these slides and sample code is available at: `https://github.com/UoM-ResPlat-DevOps/SpartanMechEng`
-* A copy of information about HPC at the University of Melbourne is available at `https://dashboard.hpc.unimelb.edu.au`. See also `man spartan` on the cluster and the `/usr/local/common/` directories for more help and code exammples.
+* A copy of information about HPC at the University of Melbourne is available at `https://dashboard.hpc.unimelb.edu.au`. See also `man spartan` on the cluster and the `/usr/local/common/` directories for more help and code examples.
 * Help is available at: `hpc-support@unimelb.edu.au`. Other courses also conducted by Research Platforms.
 -- *Slide End* --
 
@@ -25,7 +25,7 @@
 ### Part I: Using HPC
 * People need to use HPC when their datasets are "too large" or processing is "too complex" for their PC.
 * HPC is the *best* tool to processing large and complex datasets 
-* However due to latency and bandwdith issues, it is not always the best for visualisation.
+* However due to latency and bandwidth issues, it is not always the best for visualisation.
 -- *Slide End* --
 
 -- *Slide* --
@@ -44,7 +44,7 @@
 -- *Slide* --
 ### Part 1: Parallel Computing
 * With a cluster architecture, applications can be more easily parallelised across them. *Data parallel*, running same task in parallel; the horse and cart example, Monte Carlo experiments. *Task parallel*, running independent tasks in parallel with communication; driving a car, molecular modelling.
-* Further examples of serial versus parallel; weather forecasting, aerodynamic design, fluid mechanics, radiation modelling, molecullar dynamics, CGI rendering for popular movies, etc. Reality is a parallel system!
+* Further examples of serial versus parallel; weather forecasting, aerodynamic design, fluid mechanics, radiation modelling, molecular dynamics, CGI rendering for popular movies, etc. Reality is a parallel system!
 -- *Slide End* --
 
 -- *Slide* --
@@ -123,7 +123,7 @@ Mac OS 10.x. For MS-Windows users, the free PuTTY client is recommended (http://
 -- *Slide* --
 ### Part I: Latency, Bandwidth, Data Location
 * Latency is the speed of data transfer, bandwidth is the "width" of the "band" of data transfer.
-* Using a road analogy, "latency" is the smoothness of the surface, "bandwith" is the number of lanes.
+* Using a road analogy, "latency" is the smoothness of the surface, "bandwidth" is the number of lanes.
 * Distance is a *very* important factor. Data for processing should be kept as close as possible to the processor.
 * As Grace Hopper used to say: "Mind your nanoseconds!" https://www.youtube.com/watch?v=JEpsKnWZrJ8
 -- *Slide End* --
@@ -356,7 +356,7 @@ utables, manual path, libraries, and so forth.
 
 -- *Slide* --
 ### Part 3: New Modules System
-* At the end of 2019 the Spartan team started to implement a new modules system, based around compiler hiearchies. With the new system, you must invoke a compiler (if different to the default), then the application. This protects people from changing toolchains. The full toolchain does not have to be specified.
+* At the end of 2019 the Spartan team started to implement a new modules system, based around compiler hierarchies. With the new system, you must invoke a compiler (if different to the default), then the application. This protects people from changing toolchains. The full toolchain does not have to be specified.
 * Example: `source /usr/local/module/spartan_new.sh`, `module load fosscuda/2019b`, `module avail Tensorflow/`, `module load tensorflow/2.1.0-python-3.7.4`. Another option to load new system is `module load spartan_2019`.
 -- *Slide End* --
 
@@ -403,7 +403,7 @@ From the IBM 'Red Book' on Job Submission.
 -- *Slide* --
 ### Part 2: Partitions and Queues
 * Setup and launch consists of writing a short script that initially makes resource requests  (walltime, processors, memory, queues) and then commands (loading modules, changing  directories, running executables against datasets etc), and optionally checking queueing system.
-* Core command for checking paritions is `sinfo -s`, or `sinfo -p $partition` for partition and node status. Major partitions are: `cloud`, `physical`, `gpgpu`. Note also `longcloud`, and `shortgpgpu`.
+* Core command for checking partitions is `sinfo -s`, or `sinfo -p $partition` for partition and node status. Major partitions are: `cloud`, `physical`, `gpgpu`. Note also `longcloud`, and `shortgpgpu`.
 * Core command for checking queue `squeue` or `showq` (on Spartan).
 -- *Slide End* --
 
@@ -419,9 +419,9 @@ From the IBM 'Red Book' on Job Submission.
 ### Part 3: Single Core Job
 ```bash
 #!/bin/bash
-#SBATCH -<U+00AD>p cloud
-#SBATCH <U+00AD><U+00AD>--time=01:00:00
-#SBATCH <U+00AD><U+00AD>--ntasks=1
+#SBATCH -p cloud
+#SBATCH --time=01:00:00
+#SBATCH --ntasks=1
 module load my<U+00AD>app-compiler/version
 my-app data ```
 * Examples at `/usr/local/common/MATLAB` and `/usr/local/common/R`, `/usr/local/OpenFOAM`; note that the job can call other scripts. Note that Slurm has full and abbreviated directives.
@@ -496,7 +496,7 @@ dataset10.csv
 
 -- *Slide* --
 ### Part 4: Interactive Jobs
-* An interactive job, based on the resource requests made on the command  line, puts the user on to a compute node. This is typically done if they user wants to run a  large script (and shouldn't do it on the login node), or wants to test or debug a job. The  following command would launch one node with two processors for ten minutes.
+* An interactive job, based on the resource requests made on the command  line, puts the user on to a compute node. This is typically done if they user wants to run a  large script, or wants to test or debug a job. The  following command would launch one node with two processors for ten minutes.
 `sinteractive --nodes=1 --ntasks-per-node=2 --time=0:10:0`
 * Example and instructions at `/usr/local/common/interact` and in `/usr/local/common/OpenFOAM`
 -- *Slide End* --
